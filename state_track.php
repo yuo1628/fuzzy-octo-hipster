@@ -48,7 +48,12 @@
 		
 		public function __call($name, $args) {
 			call_user_func_array(array($this->trackObject, $name), $args);
-			$this->writeState(array(1, "{$name}->" . implode(", ", $args)));
+			// 建立args repr表示方式的陣列
+			$varsArray = array();
+			foreach ($args as $arg) {
+				$varsArray[] = var_export($arg, True);
+			}
+			$this->writeState(array(1, "{$name}(" . implode(", ", $varsArray) . ')'));
 		}
 	  }
 ?>
